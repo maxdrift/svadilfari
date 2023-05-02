@@ -277,12 +277,13 @@ defmodule Svadilfari do
 
   # Returns a tuple containg the labels for an entry, and the entry itself
   defp format_entry(level, msg, ts, md, state) do
-    timestamp = Sleipnir.Timestamp.from(ts)
+    _timestamp = Sleipnir.Timestamp.from(ts)
 
     entry =
       level
       |> format_event(msg, ts, md, state)
-      |> Sleipnir.entry(timestamp)
+      # |> Sleipnir.entry(timestamp)
+      |> Sleipnir.entry()
 
     {module, function} = state.derived_labels
     derived_labels = apply(module, function, [level, msg, ts, md])
