@@ -347,7 +347,9 @@ defmodule Svadilfari do
 
   defp handle_io_reply(reason, state) do
     IO.puts(IO.ANSI.red() <> "Failure while logging to Loki: " <> inspect(reason) <> IO.ANSI.reset())
-    log_buffer(%{state | ref: nil, output: nil})
+    IO.puts(IO.ANSI.red() <> "Disabling logging to Loki" <> IO.ANSI.reset())
+    # Setting log level to emergency disables further logging
+    log_buffer(%{state | ref: nil, output: nil, buffer_size: 0, buffer: %{}, level: :emergency})
   end
 
   defp flush(%{ref: nil} = state), do: state
